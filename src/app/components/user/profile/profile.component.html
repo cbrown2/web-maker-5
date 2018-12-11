@@ -1,0 +1,58 @@
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-success fixed-top">
+      <a class="navbar-brand"
+    routerLink="/user/{{uid}}"><b>Profile</b></a>
+      <button [disabled]= "myForm.invalid"class="btn bg-transparent color-white" type="submit" form="myForm"><i class="fas fa-check"></i></button>
+   
+  </nav>   
+<!-- Form -->
+<div class="container">
+
+</div>
+<form #myForm="ngForm" (ngSubmit)= "update()" id="myForm">
+  <div *ngIf="userError" class="alert alert-danger"> This username is taken, please try another one</div>
+  <div *ngIf="successFlag" class="alert alert-success"> Update Successfully</div>
+  <!-- Username -->
+  <div class="form-group">
+      <label><b>Username</b></label>
+      <input #userInput= "ngModel" required class="form-control" [(ngModel)]="user.username"
+      name="username" placeholder="Enter Username...">
+
+  </div>
+  <div *ngIf="userInput.invalid" class="alert alert-warning"> Username cannot be empty </div>
+  <!-- Email -->
+  <div class="form-group">
+      <label><b>Email</b></label>
+      <input class="form-control" name= "email" [(ngModel)] = "user.email" placeholder=" Enter Email...">
+  </div>
+  <!-- First Name -->
+  <div class="form-group">
+      <label><b>First Name</b></label>
+      <input class="form-control"
+     name= "firstName" [(ngModel)]="user.firstName" placeholder="Enter First Name...">
+  </div>
+  <!-- Last Name -->
+  <div class="form-group">
+     <label><b>Last Name</b></label>
+     <input class="form-control"
+    name= "lastName" [(ngModel)]="user.lastName" placeholder="Enter Last Name...">
+  </div>
+  <!-- buttons -->
+ <a routerLink="/user/{{uid}}/website"class="btn btn-primary
+ btn-block">Websites</a>
+  <a routerLink="/login" class="btn btn-danger
+  btn-block">Logout</a>
+  
+
+  
+</form>
+
+
+      <!-- Footer -->
+<footer class="navbar navbar-light fixed-bottom bg-light">
+  <div class="full-width">
+      <a class="color-black float-right" routerLink="/profile">
+          <i class="fas fa-user"></i></a>
+    
+</div>
+</footer>
