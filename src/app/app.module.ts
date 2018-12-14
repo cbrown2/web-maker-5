@@ -24,6 +24,7 @@ import { WebsiteService } from './services/website.service.client';
 import { PageService } from './services/page.service.client';
 import { WidgetService } from './services/widget.service.client';
 import { SharedService } from './services/shared.service.client';
+import { AuthGuard } from './services/auth-guard.service.client';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { SharedService } from './services/shared.service.client';
   ],
   imports: [
   BrowserModule, Routing, HttpModule,FormsModule],
-  providers: [UserService, WebsiteService, PageService, WidgetService, SharedService],
+  providers: [UserService, WebsiteService, PageService, WidgetService, SharedService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

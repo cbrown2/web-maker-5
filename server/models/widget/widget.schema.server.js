@@ -11,6 +11,6 @@ var WidgetSchema = mongoose.Schema(
      size: Number,
      dateCreated: { type: Date, default: Date.now }
 },  
-   {collections: Widgets}
+   {collection: 'Widget'}
 )
 module.exports = WidgetSchema

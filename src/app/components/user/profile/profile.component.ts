@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 import { UserService } from "src/app/services/user.service.client";
 import { User } from "src/app/models/user.model.client";
-import {SharedService} from '../../../services/shared.service.client';
+import { SharedService } from "../../../services/shared.service.client";
+
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
@@ -11,16 +12,17 @@ import {SharedService} from '../../../services/shared.service.client';
 export class ProfileComponent implements OnInit {
   constructor(
     private sharedService: SharedService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   uid: string;
-  user: User ={
+  user: User = {
     username: "",
     password: "",
     firstName: "",
     lastName: "",
-    email:    "",
+    email: ""
   };
   oldUsername: string;
   userError: boolean;
@@ -28,30 +30,24 @@ export class ProfileComponent implements OnInit {
   users: User[];
 
   ngOnInit() {
-          this.user =this.sharedService.user;
-          this.oldUsername = 
-          this.user.username;
+    this.user = this.sharedService.user;
+    this.uid = this.user._id;
+    this.oldUsername = this.user.username;
+  }
 
-        };
-
-      // this.oldUsername = this.user.username;
-  
-  
+  logout() {
+    this.userService.logout().subscribe((data: any) => {
+      this.router.navigate(["login"]);
+    });
+  }
 
   update() {
-
-    if(this.user.username === this.oldUsername) {
-      this.userError = false;
-      this.successFlag = true;
-      this.userService.updateUser(this.user).subscribe(
-        (user: User) => {
-         this.userError = false;
-         this.successFlag = true;
-
-        }
-        
-      );
-    }else {
+    if (this.user.username === this.oldUsername) {
+      this.userService.updateUser(this.user).subscribe((user: User) => {
+        this.userError = false;
+        this.successFlag = true;
+      });
+    } else {
       this.userService
         .findUserByUsername(this.user.username)
         .subscribe((data: any) => {
@@ -68,20 +64,3 @@ export class ProfileComponent implements OnInit {
     }
   }
 }
-
-
-    //if (this.user.username === this.oldUsername) {
-     // this.userError = false;
-    //  this.successFlag = true;
-     // this.userService.updateUser(this.user);
-    //} else {
-   //   const user: User = this.userService.findUserByUsername(this.user.username);
-   //   if (user) {
-    //    this.userError = true;
-   //     this.successFlag = false;
-    //  } else {
-    //    this.userError = false;
-    //    this.successFlag = true;
-    //    this.userService.updateUser(this.user);
-    //  }
-   // }
