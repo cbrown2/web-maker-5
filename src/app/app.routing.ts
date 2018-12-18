@@ -13,6 +13,8 @@ import { WidgetListComponent } from "./components/widget/widget-list/widget-list
 import { WidgetChooserComponent } from "./components/widget/widget-chooser/widget-chooser.component";
 import { WidgetEditComponent } from "./components/widget/widget-edit/widget-edit.component";
 import { AuthGuard } from "./services/auth-guard.service.client";
+import { UserListComponent } from './components/user/user-list/user-list.component';
+import { AdminGuard } from "./services/admin-guard.service.client";
 
 
 // Import all other components here
@@ -67,7 +69,11 @@ const APP_ROUTES: Routes = [
     component: WidgetEditComponent,
     canActivate: [AuthGuard]
   },
-
+{
+  path: "user-list",
+  component: UserListComponent,
+  canActivate: [AdminGuard]
+}
   // so on
 ];
 

@@ -1,7 +1,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-dark bg-success fixed-top">
       <a class="navbar-brand"
-    routerLink="/user/{{uid}}"><b>Profile</b></a>
+    routerLink="/profile"><b>Profile</b></a>
       <button [disabled]= "myForm.invalid"class="btn bg-transparent color-white" type="submit" form="myForm"><i class="fas fa-check"></i></button>
    
   </nav>   
@@ -42,6 +42,8 @@
  btn-block">Websites</a>
   <button type ="button" (click)= "logout()" class="btn btn-danger
   btn-block">Logout</button>
+  <br/>
+  <a  *ngIf="user.admin" class= "btn btn-outline-dark" routerLink="/user-list">User List</a>
   
 
   

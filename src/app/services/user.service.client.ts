@@ -1,23 +1,25 @@
-import { Injectable } from "@angular/core";
-import { User } from "../models/user.model.client";
+import { Injectable } from '@angular/core';
+import { User } from '../models/user.model.client';
 import { Http, Response, RequestOptions } from "@angular/http";
-import { map } from "rxjs/operators";
-import { environment } from "../../environments/environment";
+import {map} from "rxjs/operators";
+import {environment} from "../../environments/environment";
 // injecting service into module
 import { SharedService } from "./shared.service.client";
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
+
 
 @Injectable()
+
 export class UserService {
-  constructor(
-    private http: Http,
+
+  constructor(private http: Http,
     private sharedService: SharedService,
-    private router: Router
-  ) {}
+    private router: Router) {}
 
   baseUrl = environment.baseUrl;
-  options = new RequestOptions();
 
+  options = new RequestOptions();
+  
   login(username: string, password: string) {
     this.options.withCredentials = true;
     const url = this.baseUrl + "/api/login";
@@ -25,35 +27,16 @@ export class UserService {
       username: username,
       password: password
     };
+
     return this.http.post(url, user, this.options).pipe(
       map((res: Response) => {
         return res.json();
       })
-    );
+    ); 
   }
-
-  logout() {
-    this.options.withCredentials = true;
-    const url = this.baseUrl + "/api/logout";
-    return this.http.post(url, "", this.options).pipe(
-      map((res: Response) => {
-        this.sharedService.user = 0;
-        return res;
-      })
-    );
-  }
-
-  register(user: User) {
-    // this communication will be secured
-    this.options.withCredentials = true;
-    const url = this.baseUrl + "/api/register";
-    return this.http.post(url, user, this.options).pipe(
-      map((res: Response) => {
-        return res.json();
-      })
-    );
-  }
-
+   
+    
+    
   loggedIn() {
     this.options.withCredentials = true;
     return this.http
@@ -71,7 +54,6 @@ export class UserService {
         })
       );
   }
-
   adminLoggedIn() {
     this.options.withCredentials = true;
     return this.http
@@ -91,47 +73,74 @@ export class UserService {
 
   createUser(user: User) {
     const url = this.baseUrl + "/api/user";
-    return this.http.post(url, user).pipe(
-      map((res: Response) => {
-        return res.json();
+    return this.http.post(url, user).pipe(map((res: Response) => {
+      return res.json();
       })
     );
+    
   }
+   
 
   findUserById(userId: string) {
-    const url = this.baseUrl + "/api/user/" + userId;
-    return this.http.get(url).pipe(
-      map((res: Response) => {
-        return res.json();
+    const url = this.baseUrl + "/api/user/" +
+    userId;
+    return this.http.get(url).pipe(map((res: Response) => {
+      return res.json();
       })
+
     );
   }
-
+       
   findUserByUsername(username: string) {
     const url = this.baseUrl + "/api/user?username=" + username;
-    return this.http.get(url).pipe(
-      map((res: Response) => {
-        return res.json();
+    return this.http.get(url).pipe(map((res: Response) => {
+      return res.json();
       })
-    );
-  }
 
+    );
+
+  }
+       
+ 
   findUserByCredentials(username: string, password: string) {
-    const url =
-      this.baseUrl + "/api/user?username=" + username + "&password=" + password;
-    return this.http.get(url).pipe(
-      map((res: Response) => {
-        return res.json();
+    const url = this.baseUrl + "/api/user?username=" + username + "&password=" + password;
+    return this.http.get(url).pipe(map((res: Response) => {
+      return res.json();
       })
-    );
-  }
 
-  updateUser(user: User) {
-    const url = this.baseUrl + "/api/user";
-    return this.http.put(url, user).pipe(
+    );
+
+  }  
+
+
+   updateUser(user: User ) {
+    const url = this.baseUrl + "/api/user"
+    return this.http.put(url, user).pipe(map((res: Response) => {
+      return res.json();
+      })
+
+     );
+   } 
+   register(user: User) {
+    // this communication will be secured
+    this.options.withCredentials = true;
+    const url = this.baseUrl + "/api/register";
+    return this.http.post(url, user, this.options).pipe(
       map((res: Response) => {
         return res.json();
       })
     );
   }
-}
+ 
+
+   logout() {
+    this.options.withCredentials = true;
+    const url = this.baseUrl + "/api/logout";
+    return this.http.post(url, "", this.options).pipe(
+      map((res: Response) => {
+        this.sharedService.user = 0;
+        return res;
+      })
+    );
+  }
+} 

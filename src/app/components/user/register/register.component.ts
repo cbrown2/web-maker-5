@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service.client';
 import { Router } from "@angular/router";
 import { User } from 'src/app/models/user.model.client'
+import { SharedService } from 'src/app/services/shared.service.client';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,7 @@ export class RegisterComponent implements OnInit {
   userError: boolean;
   
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private sharedService: SharedService) {
     
    }
 
@@ -38,11 +39,16 @@ export class RegisterComponent implements OnInit {
               firstName: "",
               lastName: "",
               email: ""
+              
             };
-          this.userService.createUser(newUser).subscribe(
-            (user: User) => {
+            this.userService.register(newUser).subscribe((data: User) => {
+              this.sharedService.user = data;
               this.router.navigate(["profile"]);
-             });
+            },
+            (error: any) => {
+              this.userError = true;
+             }
+            );
            } else {
                  this.userError = true;
                 }
@@ -50,4 +56,3 @@ export class RegisterComponent implements OnInit {
               }
             }
           }  
-      
