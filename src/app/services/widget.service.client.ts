@@ -21,7 +21,7 @@ export class WidgetService {
         );
          
       }
-      findWidgetsByPageId(pageId) {
+      findWidgetByPageId(pageId) {
         const url = this.baseUrl + `/api/page/${pageId}/page`;
         return this.http.get(url).pipe(map((res: Response) => {
           return res.json();
